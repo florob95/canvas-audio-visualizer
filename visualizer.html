@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style.css">
+    <title>Canvas Audio Visualizer</title>
+</head>
+
+<body translate="no">
+<div id="content">
+    <audio id="audio" hidden controls crossOrigin="anonymous" src="https://clementroche.dev/nto-alter-ego.mp3"></audio>
+    <div id="overlay">
+        <div class="time pause">
+            <div class="btn pause">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" class="shape"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>
+            </div>
+            <div class="btn play">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" class="shape"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>
+            </div>
+        </div>
+    </div>
+    <canvas id="canvas" width="1071" height="290"></canvas>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+<script src="./audio.js"></script>
+
+
+
+
+
+</body></html>

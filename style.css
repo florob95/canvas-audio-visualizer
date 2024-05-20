@@ -1,0 +1,154 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    background: #08111A;
+}
+
+#content {
+    height: 100%;
+}
+
+#credit {
+    position: absolute;
+    z-index: 100;
+    bottom: 10px;
+    left: 10px;
+    color: #ffffff;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 25px;
+}
+
+#credit a {
+    /* text-decoration: none; */
+    color: #ffffff;
+}
+
+#go {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+}
+
+#canvas {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+audio {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+#range {
+    position: absolute;
+    right: 75px;
+    z-index: 100;
+    height: 100%;
+    width: 25px;
+    cursor: pointer;
+}
+#range input {
+    transform: rotate(90deg);
+    position: absolute;
+    top: 50%;
+    right: calc((-0.8 * 50vh) - 12px);
+    width: calc(0.8 * 100vh);
+}
+#range input:focus {
+    outline: none;
+}
+#range input[type=range] {
+    -webkit-appearance: none;
+    background: transparent;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 5%, white, rgba(255, 255, 255, 0) 95%);
+    cursor: pointer;
+}
+#range input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background: #ffffff;
+    /* box-shadow: -5px -5px 25px rgba(255, 255, 255, 0.5); */
+}
+
+#range input:focus {
+    outline: none;
+}
+
+#overlay {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    z-index: 100;
+    display: flex;
+}
+
+#overlay > div {
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+#overlay > div .btn {
+    width: 50px;
+    height: 50px;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+}
+
+#overlay .time.pause .pause {
+    display: none;
+}
+
+#overlay .time:not(.pause) .play {
+    display: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#overlay .btn {
+    position: relative;
+    background: #fff;
+    border: #000 solid 2px;
+}
+#overlay .btn svg .shape {
+    fill: #000;
+}
+#overlay .btn:hover {
+    background: #000;
+    transition: 0.25s;
+    top: 4px;
+    left: 4px;
+}
+#overlay .btn:hover svg .shape {
+    fill: #ffffff;
+    transition: 0.25s;
+}
+#overlay .btn:hover::after {
+    top: 0px;
+    left: 0px;
+}
+#overlay .btn::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 4px;
+    left: 4px;
+    border: #ffffff solid 2px;
+    position: absolute;
+    z-index: -1;
+}
