@@ -1,4 +1,3 @@
-//TODO change color
 const audio = document.getElementById("audio");
 const canvas = document.getElementById("canvas");
 
@@ -21,7 +20,6 @@ let analyser;
 let bufferLength;
 let dataArray;
 
-let order = [0, 1, 2];
 
 let nbParticles = 600;
 let fftSize = 2048;
@@ -60,14 +58,26 @@ class Circle {
 
     draw() {
         if (this.value !== this.cachedValue) {
-            this.rgbArray = [
-                this.value + 25 * (this.index / bufferLength),
-                500 * (this.index / bufferLength),
-                50];
+            const size = this.value
+            switch (true) {
+                case (size >= 30 && size <= 50):
+                    this.rgbArray = [255, 209, 48];
+                    break;
+                case (size >= 50 && size <= 80):
+                    this.rgbArray = [217, 255, 218];
+                    break;
+                case (size >= 81):
+                    this.rgbArray = [124, 248, 156];
+                    break;
+                default:
+                    this.rgbArray = [232, 230, 228];
+                    break;
+            }
 
-            this.rgb = `rgb(${Math.round(this.rgbArray[order[0]])},${Math.round(
-                this.rgbArray[order[1]])
-            },${Math.round(this.rgbArray[order[2]])})`;
+            this.rgb = `rgb(
+            ${this.rgbArray[0]},
+            ${this.rgbArray[1]},
+            ${this.rgbArray[2]})`;
         }
 
         drawCircle(
@@ -163,7 +173,7 @@ function drawCircle(x, y, size, fill) {
     ctx.restore();
 }
 
-window.addEventListener("resize", function() {
+window.addEventListener("resize", function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     WIDTH = canvas.width;
