@@ -12,16 +12,18 @@ let WIDTH = canvas.width;
 let HEIGHT = canvas.height;
 const ctx = canvas.getContext("2d");
 
-let simplex = new SimplexNoise();
+const simplex = new SimplexNoise();
 
 let context;
 let src;
 let analyser;
 let bufferLength;
 let dataArray;
+let circles;
 
 
-let nbParticles = 600;
+
+const nbParticles = 100;
 let fftSize = 2048;
 
 let radius;
@@ -58,26 +60,7 @@ class Circle {
 
     draw() {
         if (this.value !== this.cachedValue) {
-            const size = this.value
-            switch (true) {
-                case (size >= 30 && size <= 50):
-                    this.rgbArray = [255, 209, 48];
-                    break;
-                case (size >= 50 && size <= 80):
-                    this.rgbArray = [217, 255, 218];
-                    break;
-                case (size >= 81):
-                    this.rgbArray = [124, 248, 156];
-                    break;
-                default:
-                    this.rgbArray = [232, 230, 228];
-                    break;
-            }
-
-            this.rgb = `rgb(
-            ${this.rgbArray[0]},
-            ${this.rgbArray[1]},
-            ${this.rgbArray[2]})`;
+            this.rgb = getColor(this.value)
         }
 
         drawCircle(
@@ -89,25 +72,35 @@ class Circle {
     }
 }
 
-let circles = [];
-createCircles();
-
-function createCircles() {
-    for (let i = 0; i < nbParticles; ++i) {
-        circles.push(new Circle(i));
+const getColor = (size) => {
+    switch (true) {
+        case (size >= 25 && size <= 50):
+            return 'rgb(255, 255, 0)'
+        case (size > 50 && size <= 75):
+            return 'rgb(217, 255, 218)'
+        case (size > 75 && size <= 90):
+            return 'rgb(255, 209, 48)'
+        case (size > 90):
+            return 'rgb(124, 248, 156)'
+        default:
+            return 'rgb(255, 255, 255)'
     }
 }
 
-function showCircles() {
-    for (let i = 0; i < circles.length; ++i) {
-        circles[i].update();
-        circles[i].draw();
-    }
+ const createCircles = () => {
+    return Array.from({ length: nbParticles }, (value, index) => new Circle(index))
+}
+
+const showCircles = () => {
+    circles.forEach((circle) => {
+        circle.update()
+        circle.draw()
+    })
 }
 
 let isPause = false;
 
-pauseBtn.addEventListener("click", function () {
+pauseBtn.addEventListener("click",  () => {
     audio.pause();
     isPause = true;
     timeOverlay.classList.remove("play");
@@ -116,7 +109,7 @@ pauseBtn.addEventListener("click", function () {
 
 let firstPlay = true;
 
-playBtn.addEventListener("click", function () {
+playBtn.addEventListener("click",  () => {
     if (firstPlay) {
         firstPlay = false;
         audio.load();
@@ -147,7 +140,7 @@ playBtn.addEventListener("click", function () {
 
 let alpha = 0.5;
 
-function update() {
+const  update = () => {
     if (isPause === false) {
         analyser.getByteFrequencyData(dataArray);
         background('rgb(8, 17, 26)');
@@ -157,12 +150,12 @@ function update() {
     }
 }
 
-function background(color) {
+const background = (color) => {
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
 }
 
-function drawCircle(x, y, size, fill) {
+const drawCircle = (x, y, size, fill) => {
     ctx.save();
     ctx.beginPath();
     ctx.fillStyle = fill;
@@ -173,9 +166,13 @@ function drawCircle(x, y, size, fill) {
     ctx.restore();
 }
 
-window.addEventListener("resize", function () {
+window.addEventListener("resize",  () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     WIDTH = canvas.width;
     HEIGHT = canvas.height;
+});
+
+window.addEventListener("load", (event) => {
+   circles = createCircles();
 });
