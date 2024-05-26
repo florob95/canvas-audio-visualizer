@@ -77,9 +77,9 @@ const getColor = (size) => {
         case (size >= 25 && size <= 50):
             return 'rgb(255, 255, 0)'
         case (size > 50 && size <= 75):
-            return 'rgb(217, 255, 218)'
-        case (size > 75 && size <= 90):
             return 'rgb(255, 209, 48)'
+        case (size > 75 && size <= 90):
+            return 'rgb(217, 255, 218)'
         case (size > 90):
             return 'rgb(124, 248, 156)'
         default:
