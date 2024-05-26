@@ -98,6 +98,28 @@ const showCircles = () => {
     })
 }
 
+const firstLaunch = () => {
+    firstPlay = false;
+    audio.load();
+    audio.play();
+    audio.volume = 0.5;
+    context = new AudioContext();
+
+    src = context.createMediaElementSource(audio);
+    analyser = context.createAnalyser();
+    src.connect(analyser);
+    analyser.connect(context.destination);
+    analyser.fftSize = fftSize;
+    analyser.smoothingTimeConstant = 0.5;
+    analyser.maxDecibels = -10;
+    bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+    isPause = false;
+    update();
+    timeOverlay.classList.remove("pause");
+    timeOverlay.classList.add("play");
+}
+
 let isPause = false;
 
 pauseBtn.addEventListener("click",  () => {
@@ -111,25 +133,7 @@ let firstPlay = true;
 
 playBtn.addEventListener("click",  () => {
     if (firstPlay) {
-        firstPlay = false;
-        audio.load();
-        audio.play();
-        audio.volume = 0.5;
-        context = new AudioContext();
-
-        src = context.createMediaElementSource(audio);
-        analyser = context.createAnalyser();
-        src.connect(analyser);
-        analyser.connect(context.destination);
-        analyser.fftSize = fftSize;
-        analyser.smoothingTimeConstant = 0.5;
-        analyser.maxDecibels = -10;
-        bufferLength = analyser.frequencyBinCount;
-        dataArray = new Uint8Array(bufferLength);
-        isPause = false;
-        update();
-        timeOverlay.classList.remove("pause");
-        timeOverlay.classList.add("play");
+        firstLaunch()
     }
     audio.play();
     isPause = false;
@@ -137,8 +141,6 @@ playBtn.addEventListener("click",  () => {
     timeOverlay.classList.remove("pause");
     timeOverlay.classList.add("play");
 });
-
-let alpha = 0.5;
 
 const  update = () => {
     if (isPause === false) {
